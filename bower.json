@@ -1,0 +1,19 @@
+{
+  "name": "StartupWeekend",
+  "version": "0.0.1",
+  "main": "public/index.html",
+  "moduleType": [
+    "es6",
+    "globals",
+    "node"
+  ],
+  "authors": [
+    "Alex Millward"
+  ],
+  "license": "Restricted",
+  "dependencies": {
+    "angular": "~1.4.1",
+    "angular-route": "~1.4.1",
+    "angular-material": "~0.10.0"
+  }
+}
