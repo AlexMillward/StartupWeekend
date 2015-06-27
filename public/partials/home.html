@@ -1,8 +1,12 @@
 <div layout="column">
-  <div id="sw_slider">
+  <div id="sw_slider" style="z-index: 2;">
     <div layout="row">
-      <md-slider flex md-discrete style="margin-left: 24px; margin-right: 24px;"
-        ng-model="time" min="0" max="14" step="1" class="md-accent">
+      <div style="width: 60px; margin-left: 10px;" layout layout-align="center center">
+        <span class="md-body-1">{{dayNDaysInFuture(currentDateOffset)}}</span>
+      </div>
+      <md-slider flex style="margin-left: 24px; margin-right: 24px;"
+        ng-model="currentDateOffset" ng-change="updateFromOffset()"
+        min="0" max="14" step="1" class="md-accent">
       </md-slider>
     </div>
   </div>
@@ -11,8 +15,48 @@
       <div id="map">
       </div>
     </div>
-    <div style="width: 200px;">
-      B
+    <div>
+      <md-content>
+        <md-tabs>
+          <md-tab id="tab_filter">
+            <md-tab-label>Search Events</md-tab-label>
+            <md-tab-body>
+              <md-content class="md-padding">
+                <md-input-container>
+                  <label>Location</label>
+                  <input type="text" ng-model="searchParams.location" />
+                </md-input-container>
+                <md-button ng-click="applySearch()" class="md-raised md-primary">Apply</md-button>
+              </md-content>
+            </md-tab-body>
+          </md-tab>
+          <md-tab id="tab_add">
+            <md-tab-label>Add Event</md-tab-label>
+            <div ng-if="$root.user">
+              <md-tab-body>
+                <md-content class="md-padding">
+                  <md-input-container>
+                    <label>Name</label>
+                    <input type="text" ng-model="addition.name" />
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Start Time</label>
+                    <input type="time" ng-model="addition.startTime" />
+                  </md-input-container>
+                  <md-button ng-click="setAdditionPosition()" ng-class="{'md-warn': settingPosition, 'md-primary': !settingPosition}"
+                    class="md-raised">{{settingPosition ? 'Click on the map' : 'Select location'}}</md-button>
+                  <md-button ng-click="makeAddition()" class="md-raised md-primary">Add</md-button>
+                </md-content>
+              </md-tab-body>
+            </div>
+            <md-tab-body ng-if="!$root.user">
+              <p>
+                Sign in to add an event!
+              </p>
+            </md-tab-body>
+          </md-tab>
+        </md-tabs>
+      </md-content>
     </div>
   </div>
 </div>

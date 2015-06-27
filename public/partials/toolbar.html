@@ -1,3 +1,6 @@
-<md-toolbar layout="row">
-  <md-button href="/authenticate/facebook" title="Sign In">Sign In</md-button>
-</md-toolbar>
+<div ng-controller="ToolbarController">
+  <md-toolbar layout="row" layout-align="end center">
+    <md-button href="/authenticate/facebook" title="Sign In" ng-if="user == null">Sign In</md-button>
+    <p ng-if="user != null" style="margin-right: 24px;">{{user.name}}</p>
+  </md-toolbar>
+</div>

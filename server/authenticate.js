@@ -10,8 +10,8 @@ module.exports = function(connection) {
     done(null, user.id);
   });
 
-  passport.deserializeUser(function(user, done) {
-    connection.execute('select * from users where id=? limit 1', [user.id],
+  passport.deserializeUser(function(id, done) {
+    connection.execute('select * from users where id=? limit 1', [id],
       function(error, rows)
     {
       if (error) {
@@ -19,7 +19,6 @@ module.exports = function(connection) {
       } else if (rows.length == 0) {
         done(null, false);
       } else {
-        console.log(rows[0]);
         done(null, rows[0]);
       }
     });
@@ -30,9 +29,7 @@ module.exports = function(connection) {
     clientSecret: '9f3fd0f2a67f6041e6257cd958d59e55',
     callbackURL: '/authenticate/facebook/callback'
   }, function(accessToken, refreshToken, profile, done) {
-    console.log(profile.id, profile.name.givenName, accessToken);
-    connection.execute(('insert into users (id, name, accessToken) values (?, ?, ?) ' +
-      'on duplicate key update id=values(id), name=values(name), accessToken=values(accessToken)'),
+    connection.execute('insert into users (id, name, accessToken) values (?, ?, ?) on duplicate key update id=values(id), name=values(name), accessToken=values(accessToken)',
       [profile.id, profile.name.givenName, accessToken], function(error)
     {
       if (error) {

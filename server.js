@@ -27,7 +27,8 @@ app.use('/', express.static('public'));
 app.use('/include', express.static('bower_components'));
 
 app.use('/authenticate', require('./server/authenticate')(connection));
-app.use('/users', require('./server/user')(connection));
+app.use('/user', require('./server/user')(connection));
+app.use('/event', require('./server/event')(connection));
 
 connection.connect();
 

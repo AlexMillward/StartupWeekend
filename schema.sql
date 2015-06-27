@@ -18,8 +18,7 @@ create table if not exists groups (
 create table if not exists events (
   id mediumint unsigned not null auto_increment,
   creator_id mediumint unsigned,
-  starts timestamp,
-  ends timestamp,
+  start_time timestamp,
   longitude float,
   latitude float,
   name varchar(128),
