@@ -29,17 +29,18 @@ module.exports = function(connection) {
     clientID: '1580875758829558',
     clientSecret: '9f3fd0f2a67f6041e6257cd958d59e55',
     callbackURL: '/authenticate/facebook/callback'
-  }, function(accessToken, refreshToken, profile) {
-    connection.execute('insert into users (id, name, accessToken) values (?, ?, ?) ' +
-      'on duplicate key update id=values(id), name=values(name), accessToken=values(accessToken)',
-      [profile.id, profile.displayName, accessToken], function(error)
+  }, function(accessToken, refreshToken, profile, done) {
+    console.log(profile.id, profile.name.givenName, accessToken);
+    connection.execute(('insert into users (id, name, accessToken) values (?, ?, ?) ' +
+      'on duplicate key update id=values(id), name=values(name), accessToken=values(accessToken)'),
+      [profile.id, profile.name.givenName, accessToken], function(error)
     {
       if (error) {
         done(error);
       } else {
         done(null, {
           id: profile.id,
-          name: profile.displayName,
+          name: profile.name.givenName,
           accessToken: accessToken
         });
       }
