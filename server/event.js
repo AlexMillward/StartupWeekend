@@ -32,13 +32,8 @@ module.exports = function(connection) {
   });
 
   router.post('/search', function(request, response) {
-    connection.execute('select * from events where (longitude > ?) and (longitude < ?)' +
-      ' and (latitude > ?) and (latitude < ?) and (date(start_time) = date(now() + interval ? day))',
+    connection.execute('select * from events where (date(start_time) = date(now() + interval ? day))',
       [
-        request.body.lowerLongitude,
-        request.body.upperLongitude,
-        request.body.lowerLatitude,
-        request.body.upperLatitude,
         request.body.inDays
       ], function(error, rows)
     {
@@ -49,6 +44,55 @@ module.exports = function(connection) {
         response.json({type: 'success', events: rows});
       }
     });
+  });
+
+  router.get('/attending/:id', function(request, response) {
+    if (request.user) {
+      connection.execute('select * from user_events where user_id=? and event_id=? limit 1',
+        [request.user.id, request.params.id], function(error, rows)
+      {
+        if (error) {
+          response.json({type: 'error'});
+        } else if (rows.length == 0) {
+          response.json({type: 'fail'});
+        } else {
+          response.json({type: 'success'});
+        }
+      });
+    } else {
+      response.json({type: 'fail'});
+    }
+  });
+
+  router.get('/register_attendance/:id', function(request, response) {
+    if (request.user) {
+      connection.execute('insert ignore into user_events (user_id, event_id) values (?, ?)',
+        [request.user.id, request.params.id], function(error)
+      {
+        if (error) {
+          response.json({type: 'error'});
+        } else {
+          response.json({type: 'success'});
+        }
+      });
+    } else {
+      response.json({type: 'fail'});
+    }
+  });
+
+  router.get('/timeline', function(request, response) {
+    if (request.user) {
+      connection.execute('select events.id, events.start_time, events.longitude, events.latitude, events.name, events.image_url ' +
+        'from user_events inner join events on user_events.event_id = events.id where user_id=?',
+        [request.user.id], function(error, rows)
+      {
+        if (error) {
+          response.json({type: 'error', error: error});
+        } else {
+          response.json({type: 'success', events: rows});
+        }
+      });
+    }
   });
 
   return router;

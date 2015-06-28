@@ -22,6 +22,7 @@ create table if not exists events (
   longitude float,
   latitude float,
   name varchar(128),
+  image_url varchar(256),
   primary key (id)
 );
 create table if not exists user_events (

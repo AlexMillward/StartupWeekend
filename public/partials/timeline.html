@@ -1,0 +1,14 @@
+<md-dialog style="max-width: 600px">
+  <md-dialog-content layout="column" layout-align="center center">
+    <h2 class="md-title">Timeline</h2>
+    <md-list>
+      <md-list-item class="md-3-line" ng-repeat="event in events">
+        <img class="face" src="{{event.image_url}}" ng-if="event.image_url" style="width: 120px;" />
+        <div class="md-list-item-text">
+          {{event.name}}
+        </div>
+        <md-divider md-inset ng-if="!$last"></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-dialog-content>
+</md-dialog>

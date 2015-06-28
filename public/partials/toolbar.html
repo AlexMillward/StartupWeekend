@@ -1,6 +1,14 @@
 <div ng-controller="ToolbarController">
-  <md-toolbar layout="row" layout-align="end center">
-    <md-button href="/authenticate/facebook" title="Sign In" ng-if="user == null">Sign In</md-button>
-    <p ng-if="user != null" style="margin-right: 24px;">{{user.name}}</p>
+  <img draggable="false" src="/assets/oh.gif" style="z-index: 4; position: absolute; top: -26px; left: -18px; height: 240px;"/>
+  <md-toolbar class="md-tall" layout="row" layout-align="end end">
+    <div layout="row">
+      <div ng-if="user != null">
+        <md-button title="Timeline" ng-click="openTimeline()">My Timeline</md-button>
+      </div>
+      <div>
+        <md-button href="/authenticate/facebook" title="Sign In" ng-if="user == null">Sign In</md-button>
+        <md-button title="User" ng-if="user != null">{{user.name}}</md-button>
+      </div>
+    </div>
   </md-toolbar>
 </div>

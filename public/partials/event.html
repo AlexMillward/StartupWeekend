@@ -1,0 +1,9 @@
+<md-dialog style="max-width: 600px">
+  <md-dialog-content layout="column" layout-align="center center">
+    <img src="{{event.image_url}}" ng-if="event.image_url" />
+    <h2 class="md-title">{{event.name}}</h2>
+    <md-button ng-click="attend()" class="md-raised" ng-class="{'md-disabled': attending, 'md-primary': !attending}">
+      {{attending ? 'You are attending!' : 'I am attending!'}}
+    </md-button>
+  </md-dialog-content>
+</md-dialog>

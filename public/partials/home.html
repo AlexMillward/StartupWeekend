@@ -1,16 +1,16 @@
-<div layout="column">
-  <div id="sw_slider" style="z-index: 2;">
+<div layout="column" style="background-color: #81cbb3;">
+  <div id="sw_slider" style="z-index:6;">
     <div layout="row">
-      <div style="width: 60px; margin-left: 10px;" layout layout-align="center center">
+      <div style="width: 60px; margin-left: 24px;" layout layout-align="center center">
         <span class="md-body-1">{{dayNDaysInFuture(currentDateOffset)}}</span>
       </div>
       <md-slider flex style="margin-left: 24px; margin-right: 24px;"
         ng-model="currentDateOffset" ng-change="updateFromOffset()"
-        min="0" max="14" step="1" class="md-accent">
+        min="-7" max="31" step="1" class="md-accent">
       </md-slider>
     </div>
   </div>
-  <div layout="row">
+  <div layout="row" style="background-color: white;">
     <div flex>
       <div id="map">
       </div>
