@@ -34,10 +34,9 @@ connection.connect();
 
 connection.query(fs.readFileSync('./schema.sql', 'utf8'), function(error) {
   if (error) {
-    console.log(error);
     connection.end();
     throw error;
   }
 })
 
-var server = app.listen(3000);
+var server = app.listen(process.env.PORT || 3000);

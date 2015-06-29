@@ -1,3 +1,9 @@
 md-slider .md-thumb {
   z-index: 7;
 }
+
+.md-tab, .md-button {
+  font-family: 'Helvetica Bold', RobotoDraft, Roboto, 'Helvetica Neue', sans-serif;
+  text-transform: none;
+  font-weight: bold;
+}

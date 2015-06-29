@@ -83,7 +83,7 @@ module.exports = function(connection) {
   router.get('/timeline', function(request, response) {
     if (request.user) {
       connection.execute('select events.id, events.start_time, events.longitude, events.latitude, events.name, events.image_url ' +
-        'from user_events inner join events on user_events.event_id = events.id where user_id=?',
+        'from user_events inner join events on user_events.event_id = events.id where user_id=? order by events.start_time desc',
         [request.user.id], function(error, rows)
       {
         if (error) {
